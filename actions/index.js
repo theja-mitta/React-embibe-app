@@ -1,7 +1,8 @@
-export const CHANGE_LOGGED_IN = 'CHANGE_LOGGED_IN';
+export const STUDENTS_DATA = 'STUDENTS_DATA';
+import { get } from 'axios';
 
 
-export const changeLoggedIn = (newValue) => ({
-  type: CHANGE_LOGGED_IN,
-  newValue: newValue,
-});
+export const getStudentsData = () => async dispatch => {
+  const response = await get(`https://api.myjson.com/bins/1dlper`);
+  dispatch({type: STUDENTS_DATA, payload: response});
+};

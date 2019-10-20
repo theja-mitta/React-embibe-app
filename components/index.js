@@ -1,12 +1,8 @@
 import React from 'react';
 import { Grid, Form, Header, Message } from 'semantic-ui-react';
-import styles from '../style.css';
+import style from '../style.css';
 import Students from './Students';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
-
-
-// import { connect } from 'react-redux';
-// import { changeLoggedIn } from './actions';
 
 
 class App extends React.Component {
@@ -22,6 +18,7 @@ class App extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
   }
+
   onSubmit(e) {
     e.preventDefault();
 
@@ -32,7 +29,6 @@ class App extends React.Component {
     if (!(username === 'theja' && password === 'embibe')) {
       return this.setState({ error: true });
     }
-
     alert("you're logged in. yay!");
     this.props.history.push("/Students");
   }
@@ -48,7 +44,7 @@ class App extends React.Component {
       <Grid>
         <Grid.Column width={6} />
         <Grid.Column width={4}>
-          <Form className={styles.loginForm} error={error} onSubmit={this.onSubmit}>
+          <Form style={{   marginTop: '200px' }} error={error} onSubmit={this.onSubmit}>
             <Header as="h1">Login</Header>
             {error && <Message
               error={error}

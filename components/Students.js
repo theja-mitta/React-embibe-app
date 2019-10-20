@@ -1,45 +1,32 @@
 import React from 'react';
 import { get } from 'axios';
+import { Grid, Form, Header, Message } from 'semantic-ui-react';
+import '../style.css';
+import Student from './Student';
+import { connect } from 'react-redux';
+import { getStudentsData } from '../actions';
 
-
-export default class Students extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      students: []
-    };
-  }
+class Students extends React.Component {
 
   componentDidMount() {
-    this.getUsers();
-  }
-
-
-  getUsers() {
-    get('https://api.myjson.com/bins/1dlper')
-      .then(({ data }) => {
-        console.log(data);
-        const { students } = data;
-        this.setState({
-          students: data.students
-        });
-      });
+    this.props.getStudentsData();
   }
 
   getStudents() {
-    if(this.state.students = []) {
-        // students.map((student,index) => console.log(student[index]));
-        //  students.each(obj, function(k, v) {
-        //   result += k + " , " + v + "\n";
-        // });
-        // this.state.students.forEach(function(element, index, array) {
-        //   console.log(element);
-        // });
+    if(!this.props.students) {
       return <div> Loading!! </div>;
     } else {
-      return <div> data </div>;
-    }
+      return (
+          <Grid>
+            <Grid.Column width={6} />
+            <Grid.Column width={4}>
+            {Object.keys(this.props.students).map(key => (
+              <Student {...this.props.students[key]} id={key} history={this.props.history}/>
+            ))}
+            </Grid.Column>
+          </Grid>
+        )
+      }
   }
 
   render() {
@@ -51,3 +38,9 @@ export default class Students extends React.Component {
   }
 
 }
+
+const mapStateToProps = state => {
+  return { students: state.students.data };
+};
+
+export default connect(mapStateToProps, { getStudentsData })(Students);

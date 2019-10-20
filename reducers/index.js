@@ -1,19 +1,19 @@
 import { combineReducers } from 'redux';
 
-import { CHANGE_LOGGED_IN } from '../actions';
+import { STUDENTS_DATA } from '../actions';
 
 
 
-const loggedInReducer = ( state = null, action) => {
+const studentsDataReducer = ( state = [], action) => {
   switch (action.type) {
-    case CHANGE_LOGGED_IN: return action.newValue;
+    case STUDENTS_DATA: return action.payload;
     default: return state;
   };
 };
 
 
 const reducers = combineReducers({
-  loggedIn: loggedInReducer,
+  students: studentsDataReducer
 });
 
 

@@ -7,9 +7,17 @@ import { connect } from 'react-redux';
 import { getStudentsData } from '../actions';
 
 class Students extends React.Component {
-
+  constructor(props) {
+    super(props);
+    
+    this.handleLogout = this.handleLogout.bind(this);
+  }
   componentDidMount() {
     this.props.getStudentsData();
+  }
+
+  handleLogout() {
+    this.props.history.push("/");
   }
 
   getStudents() {
@@ -23,6 +31,9 @@ class Students extends React.Component {
             {Object.keys(this.props.students).map(key => (
               <Student {...this.props.students[key]} id={key} history={this.props.history}/>
             ))}
+            </Grid.Column>
+            <Grid.Column width={6}>
+              <Form.Button onClick={this.handleLogout}>Logout!</Form.Button>
             </Grid.Column>
           </Grid>
         )

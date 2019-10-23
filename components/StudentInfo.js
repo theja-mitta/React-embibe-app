@@ -9,6 +9,7 @@ class StudentInfo extends React.Component {
     this.state = {
       id: null
     }
+    this.handleGoBack = this.handleGoBack.bind(this);
   }
 
   componentDidMount() {
@@ -16,6 +17,10 @@ class StudentInfo extends React.Component {
     this.setState({
       id: params.studentId
     });
+  }
+
+  handleGoBack() {
+    this.props.history.push("/Students");
   }
 
   render() {
@@ -26,6 +31,9 @@ class StudentInfo extends React.Component {
           <Card>
               {this.state.id ? <Card.Content><Card.Header>{this.props.students[this.state.id].name}</Card.Header><Card.Description>{this.props.students[this.state.id].class}</Card.Description><Card.Description>{this.props.students[this.state.id].rollNo}</Card.Description></Card.Content> : <span>Loading !!!</span>}
           </Card>
+         </Grid.Column>
+         <Grid.Column width={6}>
+            <Form.Button onClick={this.handleGoBack}>Go back!</Form.Button>
          </Grid.Column>
       </Grid>);
   }

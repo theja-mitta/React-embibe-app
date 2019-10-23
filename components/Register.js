@@ -1,12 +1,9 @@
 import React from 'react';
 import { Grid, Form, Header, Message } from 'semantic-ui-react';
-import style from '../style.css';
-import Students from './Students';
-import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { addUser } from '../actions';
 
-
-class App extends React.Component {
+class Register extends React.Component {
   constructor(props) {
     super(props);
 
@@ -18,8 +15,8 @@ class App extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.handleRegister = this.handleRegister.bind(this);
   }
+
 
   onSubmit(e) {
     e.preventDefault();
@@ -28,21 +25,17 @@ class App extends React.Component {
 
     this.setState({ error: false });
 
-    // Find if the array contains an object by comparing the property value
-    if(this.props.users.users.some(user => user.username === username && user.password === password)){
-        alert("you're logged in. yay!");
-        this.props.history.push("/Students");
-    } else{
-        this.setState({ error: true });
-    } 
+    if (username === '' || password === '') {
+      return this.setState({ error: true });
+    }
+
+    alert("you're registered successfully. yay!");
+    this.props.addUser({username,password});
+    this.props.history.push("/");
   }
 
   handleChange(e, { name, value }) {
     this.setState({ [name]: value });
-  }
-
-  handleRegister() {
-    this.props.history.push("/Register");
   }
 
   render() {
@@ -53,10 +46,10 @@ class App extends React.Component {
         <Grid.Column width={6} />
         <Grid.Column width={4}>
           <Form style={{   marginTop: '200px' }} error={error} onSubmit={this.onSubmit}>
-            <Header as="h1">Login</Header>
+            <Header as="h1">Register</Header>
             {error && <Message
               error={error}
-              content="That username/password is incorrect. Try again!"
+              content="Enter username & password. Please!"
             />}
             <Form.Input
               inline
@@ -71,18 +64,12 @@ class App extends React.Component {
               name="password"
               onChange={this.handleChange}
             />
-            <Form.Button type="submit">Login!</Form.Button>
+            <Form.Button type="submit">Register!</Form.Button>
           </Form>
-          <h4>Are you a new student?</h4>
-          <Form.Button type="Click" onClick={this.handleRegister}>Register here!</Form.Button>
         </Grid.Column>
       </Grid>
-    );
+      );
+    }
   }
-}
 
-const mapStateToProps = (state) => {
-  return { users: state.users };
-};
-
-export default connect(mapStateToProps)(App);
+export default connect(null,{ addUser })(Register);

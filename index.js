@@ -5,6 +5,7 @@ import './style.css';
 import App from './components';
 import Students from './components/Students';
 import StudentInfo from './components/StudentInfo';
+import Register from './components/Register';
 import { createBrowserHistory } from "history";
 import { Router, Route, Switch, PrivateRouter } from 'react-router-dom';
 
@@ -23,6 +24,7 @@ render(
     <Router history={customHistory}>
       <Switch>
         <Route exact path="/" component={App} />
+        <Route exact path="/Register" component={Register} />
         <Route exact path="/Students" component={Students} />
         <Route exact path="/Students/:studentId" component={StudentInfo} />
       </Switch>
